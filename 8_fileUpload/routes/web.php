@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UploadController;
+use App\Http\Controllers\ImageGalleryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::view('/', 'welcome');
+Route::get('/gallery', [ImageGalleryController::class, 'index']);
+Route::delete('/delete-image', [ImageGalleryController::class, 'deleteImage']);
+Route::get('/upload', [UploadController::class, 'displayUpload']);
+Route::post('/upload', [UploadController::class, 'handleUpload']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/multiple-upload', [UploadController::class, 'displayMultipleUpload']);
+Route::post('/multiple-upload', [UploadController::class, 'handleMultipleUpload']);

@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
-    </head>
-    <body>
-           <h1>Welcome to Laravel</h1>
-           <p>This is a simple application to demonstrate file uploads.</p>
-    </body>
-</html>
+@section('title', 'Home Page')
+
+@section('content')
+    <div class="container">
+        <h1>Welcome to the Home Page</h1>
+        <p>This is a simple home page for your Laravel application.</p>
+        <p>Use the navigation bar above to explore different sections.</p>
+    </div>
+@endsection
