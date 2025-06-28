@@ -41,7 +41,8 @@ class StudentController extends Controller
     public function showStudents()
     {
         // Retrieve all students from the database
-        $students = Student::all();
+        // students = Student::all();
+        $students = Student::paginate(3); // Use pagination to limit the number of students displayed per page
 
         // Hide the 'password' attribute from the collection
         $students->makeHidden(['password']);
@@ -107,15 +108,31 @@ class StudentController extends Controller
 
         // Query the database for students whose name contains the search term
         // You can add more fields to search (e.g., email, phone)
-        $students = Student::where('name', 'like', '%' . $searchTerm . '%')
-                           ->get();
+        // $students = Student::where('name', 'like', '%' . $searchTerm . '%')->get();
+        // If you want to paginate the results, you can use:
+        $students = Student::where('name', 'like', '%' . $searchTerm . '%')->paginate(5);
 
         // Hide the password attribute for security
         $students->makeHidden(['password']);
 
         // Return the search results view, passing the filtered students and the search term
-        return view('search_student', [
+        return view('show_students', [
             'students' => $students,
         ]);
+    }
+
+    public function deleteMultipleStudents(Request $request)
+    {
+        // Validate the request to ensure 'student_ids' is an array
+        $request->validate([
+            'student_ids' => 'required|array',
+            'student_ids.*' => 'exists:students,id', // Ensure each ID exists in the students table
+        ]);
+
+        // Delete the selected students
+        Student::destroy($request->input('student_ids'));
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Selected students deleted successfully!');
     }
 }
