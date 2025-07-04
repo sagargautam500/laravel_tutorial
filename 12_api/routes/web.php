@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SellerController;
-use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +16,3 @@ use App\Http\Controllers\MailController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('list',[SellerController::class,'list']);
-
-Route::get('product-list',[SellerController::class,'product_list']);
-
-Route::get('send-email',[MailController::class,'sendEmail']);
